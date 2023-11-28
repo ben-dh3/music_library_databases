@@ -21,3 +21,14 @@ def test_get_all_records(db_connection): # See conftest.py to learn what `db_con
         Album(11, 'Fodder on My Wings', 1982, 4),
         Album(12, 'Ring Ring', 1973, 2),
     ]
+
+def test_find_method(db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    repository = AlbumRepository(db_connection)
+
+    album = repository.find(1)
+    assert album == Album(1, 'Doolittle', 1989, 1)
+
+    album = repository.find(2)
+    assert album == Album(2, 'Surfer Rosa', 1988, 1)
+

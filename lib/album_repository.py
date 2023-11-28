@@ -8,30 +8,24 @@ class AlbumRepository:
         self._connection = connection
 
     def all(self):
-        rows = self._connection.execute('SELECT * from albums')
+        rows = self._connection.execute('SELECT * FROM albums')
         albums = []
         for row in rows:
             item = Album(row["id"], row["title"], row["release_year"], row["artist_id"])
             albums.append(item)
         return albums
 
+    def find(self, id):
+        rows = self._connection.execute('SELECT * FROM albums WHERE id = %s', [id])
+        album = rows[0]
+        return Album(album["id"], album["title"], album["release_year"], album["artist_id"])
+    
         # Executes the SQL query:
-        # SELECT title, release_year, artist_id FROM albums;
+        # SELECT title, release_year, artist_id FROM albums WHERE id = $1;
 
-        # Returns an array of album objects.
+        # Returns a single album object.
 
-        # Gets a single record by its ID
-        # One argument: the id (number)
-
-
-
-    # def find(id):
-    #     # Executes the SQL query:
-    #     # SELECT title, release_year, artist_id FROM albums WHERE id = $1;
-
-    #     # Returns a single album object.
-
-    #     # Add more methods below for each operation you'd like to implement.
+        # Add more methods below for each operation you'd like to implement.
 
     # def create(title, release_year, artist_id):
     #     # INSERT INTO albums (title, release_year, artist_id) VALUES (<string>, <string>, <int>)
