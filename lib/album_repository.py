@@ -19,22 +19,12 @@ class AlbumRepository:
         rows = self._connection.execute('SELECT * FROM albums WHERE id = %s', [id])
         album = rows[0]
         return Album(album["id"], album["title"], album["release_year"], album["artist_id"])
-    
-        # Executes the SQL query:
-        # SELECT title, release_year, artist_id FROM albums WHERE id = $1;
 
-        # Returns a single album object.
+    def create(self, album):
+        self._connection.execute('INSERT INTO albums (title, release_year, artist_id) VALUES (%s, %s, %s)', [album.title, album.release_year, album.artist_id])
+        return None
 
-        # Add more methods below for each operation you'd like to implement.
-
-    # def create(title, release_year, artist_id):
-    #     # INSERT INTO albums (title, release_year, artist_id) VALUES (<string>, <string>, <int>)
-    #     # return None?
-
-    # def update(optional arguments?)
-    #     # UPDATE albums SET <argument> = ... WHERE <arguement> = ...
-    #     # return None
-
-    # def delete(optional arguments?)
-    #     # DELETE FROM albums WHERE <arguments> = ...
+    def delete(self, id):
+        self._connection.execute('DELETE FROM albums WHERE id = %s', [id])
+        return None
     
